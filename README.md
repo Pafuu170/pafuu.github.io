@@ -1,1 +1,1000 @@
-# pafuu.github.io
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pafuu.dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brass: #b5894a;
+    --brass-light: #d4a85c;
+    --brass-dark: #7a5c2e;
+    --font-display: 'Special Elite', serif;
+    --font-body: 'Crimson Text', serif;
+    --font-mono: 'Share Tech Mono', monospace;
+  }
+
+  [data-theme="dark"] {
+    --bg: #1a1208;
+    --bg2: #231a0d;
+    --surface: rgba(35,26,13,0.7);
+    --surface-hover: rgba(35,26,13,0.95);
+    --text: #e8d9b0;
+    --text-dim: #c4b080;
+    --border: rgba(181,137,74,0.18);
+    --border-hover: rgba(181,137,74,0.42);
+    --nav-bg: rgba(26,18,8,0.97);
+    --divider: rgba(181,137,74,0.15);
+    --tag-bg: rgba(181,137,74,0.07);
+    --input-bg: rgba(35,26,13,0.8);
+  }
+
+  [data-theme="light"] {
+    --bg: #f0e6c8;
+    --bg2: #e8d9aa;
+    --surface: rgba(255,248,230,0.85);
+    --surface-hover: rgba(255,248,230,1);
+    --text: #2a1e08;
+    --text-dim: #5a3e18;
+    --border: rgba(122,92,46,0.28);
+    --border-hover: rgba(122,92,46,0.55);
+    --nav-bg: rgba(232,214,168,0.98);
+    --divider: rgba(122,92,46,0.2);
+    --tag-bg: rgba(122,92,46,0.1);
+    --input-bg: rgba(255,248,230,0.9);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(181,137,74,0.04) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b5894a' fill-opacity='0.025'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    gap: 0;
+    transition: background 0.3s;
+  }
+
+  nav::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brass), var(--brass-light), var(--brass), transparent);
+    opacity: 0.45;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--brass-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .nav-logo .tld {
+    color: var(--brass-dark);
+    font-size: 0.85rem;
+  }
+
+  .gear { display: inline-block; animation: spin 12s linear infinite; color: var(--brass); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    flex: 1;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0 0.9rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--divider);
+    transition: color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--brass-light);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--brass-light);
+    background: rgba(181,137,74,0.06);
+  }
+
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+  /* THEME TOGGLE */
+  .theme-toggle {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--brass);
+    color: var(--brass-light);
+    background: rgba(181,137,74,0.08);
+  }
+
+  /* MAIN */
+  main { position: relative; z-index: 1; padding-top: 56px; }
+
+  .section {
+    min-height: 100vh;
+    padding: 5rem 10vw;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section.active { display: flex; }
+
+  /* HOME */
+  #home { position: relative; overflow: hidden; }
+
+  .home-bg-gear {
+    position: absolute;
+    right: -80px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 40vw;
+    opacity: 0.022;
+    animation: spin 80s linear infinite;
+    pointer-events: none;
+    color: var(--brass);
+  }
+
+  .home-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--brass);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .home-tag::before { content: '//'; color: var(--brass-dark); }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 1.05;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 span { color: var(--brass-light); }
+
+  .home-sub {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 540px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-style: italic;
+  }
+
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--brass);
+    color: var(--brass-light);
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn:hover { background: rgba(181,137,74,0.1); color: var(--text); }
+
+  .btn-filled {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+
+  .btn-filled:hover { background: var(--brass-light); border-color: var(--brass-light); color: var(--bg); }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--brass-light);
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.03em;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--brass-dark);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 920px;
+  }
+
+  .about-text { font-size: 1.05rem; color: var(--text-dim); line-height: 1.85; }
+  .about-text p + p { margin-top: 1rem; }
+
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--brass);
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 20px; right: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brass), transparent);
+  }
+
+  .about-card-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--brass);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--brass-light);
+    flex-shrink: 0;
+    box-shadow: 0 0 5px var(--brass);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  /* WORK */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.5rem;
+    max-width: 980px;
+  }
+
+  .work-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .work-card::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 20px; right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brass-dark), transparent);
+    transition: background 0.2s;
+  }
+
+  .work-card:hover { border-color: var(--border-hover); background: var(--surface-hover); }
+  .work-card:hover::after { background: linear-gradient(90deg, transparent, var(--brass), transparent); }
+
+  .work-num {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--brass-dark);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.6rem;
+  }
+
+  .work-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .work-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 1rem; }
+
+  .work-status {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+  }
+
+  .work-status.wip   { color: var(--brass); border-color: var(--brass-dark); }
+  .work-status.concept { color: #a08060; border-color: #6a4c2a; }
+  .work-status.complete { color: #8ab56a; border-color: #4a7030; }
+
+  /* FAQ */
+  .faq-list { max-width: 680px; }
+
+  .faq-item { border-bottom: 1px solid var(--divider); padding: 1.2rem 0; }
+  .faq-item:first-child { border-top: 1px solid var(--divider); }
+
+  .faq-q {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--brass-light);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    gap: 1rem;
+  }
+
+  .faq-q::after { content: '⊕'; font-size: 0.95rem; color: var(--brass-dark); transition: transform 0.2s; flex-shrink: 0; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); color: var(--brass); }
+
+  .faq-a {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+  }
+
+  .faq-item.open .faq-a { max-height: 220px; padding-top: 0.75rem; }
+
+  /* LINKS */
+  .links-grid { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; }
+
+  .link-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .link-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 2px;
+    background: var(--brass-dark);
+    transition: background 0.2s;
+  }
+
+  .link-row:hover { border-color: var(--border-hover); background: var(--surface-hover); }
+  .link-row:hover::before { background: var(--brass-light); }
+
+  .link-icon { font-size: 1.2rem; color: var(--brass); width: 26px; text-align: center; }
+  .link-label { font-family: var(--font-display); font-size: 1.05rem; }
+  .link-sub { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.1em; margin-top: 2px; }
+  .link-arrow { margin-left: auto; color: var(--brass-dark); transition: color 0.2s, transform 0.2s; }
+  .link-row:hover .link-arrow { color: var(--brass-light); transform: translateX(4px); }
+
+  /* CONTACT */
+  .contact-wrap { max-width: 540px; }
+  .contact-intro { font-size: 1.05rem; color: var(--text-dim); margin-bottom: 2rem; font-style: italic; }
+  .form-field { margin-bottom: 1.25rem; }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.65rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.3s;
+    resize: none;
+  }
+
+  .form-input:focus, .form-textarea:focus { border-color: var(--brass); }
+  .form-textarea { min-height: 120px; }
+
+  .form-note {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--brass-dark);
+    margin-top: 1.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* RIVET BOX */
+  .rivet-box { position: relative; }
+  .rivet-box::before { content: ''; position: absolute; top: 6px; left: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--brass-dark); border: 1px solid var(--brass); }
+  .rivet-box::after { content: ''; position: absolute; bottom: 6px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--brass-dark); border: 1px solid var(--brass); }
+
+  /* WORK CARD CLICKABLE */
+  .work-card { cursor: pointer; }
+  .work-card-hint {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: var(--brass-dark);
+    text-transform: uppercase;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .work-card:hover .work-card-hint { color: var(--brass); }
+
+  /* PROJECT MODAL OVERLAY */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10,7,2,0.82);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--bg2, #231a0d);
+    border: 1px solid var(--border);
+    max-width: 720px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 30px; right: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brass), transparent);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.75rem 1.75rem 1rem;
+    gap: 1rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .modal-num {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--brass-dark);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .modal-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { border-color: var(--brass); color: var(--brass-light); }
+
+  .modal-body { padding: 1.5rem 1.75rem 2rem; }
+
+  .modal-image {
+    width: 100%;
+    aspect-ratio: 16/7;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  .modal-image img.loaded { display: block; }
+
+  .modal-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--brass-dark);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .modal-image-placeholder span { font-size: 2rem; opacity: 0.4; }
+
+  .modal-content-text {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    line-height: 1.85;
+  }
+
+  .modal-content-text p + p { margin-top: 1rem; }
+
+  .modal-footer {
+    padding: 0 1.75rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .scroll-hint {
+    position: fixed;
+    bottom: 2rem; right: 2.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: var(--brass-dark);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0.55;
+    z-index: 50;
+  }
+
+  @media (max-width: 720px) {
+    .about-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 0.75rem; }
+    .nav-links a { padding: 0 0.55rem; font-size: 0.6rem; }
+    .section { padding: 4rem 5vw; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showSection('home')">
+    <span class="gear">⚙</span> pafuu<span class="tld">.dev</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('home')" class="active" data-section="home">Home</a></li>
+    <li><a href="#" onclick="showSection('about')" data-section="about">About Me</a></li>
+    <li><a href="#" onclick="showSection('work')" data-section="work">Work</a></li>
+    <li><a href="#" onclick="showSection('faq')" data-section="faq">FAQ</a></li>
+    <li><a href="#" onclick="showSection('links')" data-section="links">Links</a></li>
+    <li><a href="#" onclick="showSection('contact')" data-section="contact">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle light/dark mode">
+    <span id="themeIcon">☀</span> <span id="themeLabel">Light</span>
+  </button>
+</nav>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home" class="section active">
+    <div class="home-bg-gear" aria-hidden="true">⚙</div>
+    <div class="home-tag">portfolio · 2026</div>
+    <h1>hi, i'm<br><span>pafuu</span></h1>
+    <p class="home-sub">Game dev building one universe for all my games to live in. Unity crafter, cybersecurity curious, networking nerd & full-time gaming enthusiast.</p>
+    <div class="btn-group">
+      <a class="btn btn-filled" href="#" onclick="showSection('work')">⚙ View Work</a>
+      <a class="btn" href="#" onclick="showSection('contact')">✉ Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-title">About Me</div>
+    <div class="section-subtitle">// logs · entry 001</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Hey — I'm <strong style="color:var(--brass-light); font-style:normal;">pafuu</strong>, an upcoming game developer with one big vision: every game I make exists in the same shared universe. Different genres, different stories — but one world underneath it all. Think Azeroth, but mine. Built in <strong style="color:var(--brass-light); font-style:normal;">Unity</strong>.</p>
+        <p>On the side I'm genuinely fascinated by the practical side of cybersecurity — how everyday users stay safe online. Password managers like Bitwarden, good OPSEC habits, understanding how your traffic actually moves through a network. The boring stuff that actually matters.</p>
+        <p>I have a habit of finding a new hobby, diving in headfirst, and refusing to come back up. Oh, and I'm all in on gaming — always have been, always will be.</p>
+        <div class="tag-cloud">
+          <span class="tag">Unity</span>
+          <span class="tag">Game Dev</span>
+          <span class="tag">Shared Universe</span>
+          <span class="tag">Cybersecurity</span>
+          <span class="tag">Networking</span>
+          <span class="tag">Gaming</span>
+          <span class="tag">Bitwarden</span>
+          <span class="tag">Hobby Collector</span>
+        </div>
+      </div>
+      <div>
+        <div class="about-card rivet-box">
+          <div class="about-card-title">// current status</div>
+          <div class="status-row"><span class="status-dot"></span> Building a shared game universe in Unity</div>
+          <div class="status-row"><span class="status-dot" style="animation-delay:.5s"></span> Exploring networking & user security</div>
+          <div class="status-row"><span class="status-dot" style="animation-delay:1s"></span> Currently playing something (always)</div>
+          <div class="status-row"><span class="status-dot" style="animation-delay:1.5s; background:#8ab56a; box-shadow:0 0 5px #8ab56a"></span> Open to collabs & chats</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="section">
+    <div class="section-title">Work</div>
+    <div class="section-subtitle">// projects · experiments · ideas</div>
+    <div class="work-grid">
+      <div class="work-card rivet-box" onclick="openProject(0)">
+        <div class="work-num">001</div>
+        <div class="work-title">Project: Axis</div>
+        <div class="work-desc">The first entry point into the shared universe. A Unity game that plants the seeds of a much larger world.</div>
+        <span class="work-status wip">In Progress</span>
+        <div class="work-card-hint">⊕ open file</div>
+      </div>
+      <div class="work-card rivet-box" onclick="openProject(1)">
+        <div class="work-num">002</div>
+        <div class="work-title">The Book</div>
+        <div class="work-desc">A novel set in the same universe as all my games. The written gateway into the world — lore, characters, and stories told in ink.</div>
+        <span class="work-status wip">In Progress</span>
+        <div class="work-card-hint">⊕ open file</div>
+      </div>
+      <div class="work-card rivet-box" onclick="openProject(2)">
+        <div class="work-num">003</div>
+        <div class="work-title">Security Notes</div>
+        <div class="work-desc">A collection of practical security tips — password managers, safe browsing, networking basics. Staying safe, explained simply.</div>
+        <span class="work-status concept">Concept</span>
+        <div class="work-card-hint">⊕ open file</div>
+      </div>
+      <div class="work-card rivet-box" onclick="openProject(3)">
+        <div class="work-num">004</div>
+        <div class="work-title">This Portfolio</div>
+        <div class="work-desc">A steampunk-themed personal site. Because why have a normal portfolio when you can have gears and brass?</div>
+        <span class="work-status complete">Complete</span>
+        <div class="work-card-hint">⊕ open file</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="section-title">FAQ</div>
+    <div class="section-subtitle">// frequently asked questions</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Why one shared universe across all your games?</div>
+        <div class="faq-a">Every game I make is set in the same world — different genres, different stories, but one universe underneath. Like how Azeroth ties together WoW, Warcraft, and Hearthstone. I want to build something with that kind of depth, but entirely mine.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What engine do you use?</div>
+        <div class="faq-a">Unity. It hits the sweet spot between power and flexibility for the kinds of games I want to make. I'm always tinkering with it and learning new corners of the engine.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What cybersecurity areas interest you?</div>
+        <div class="faq-a">Mostly the practical, everyday side — how regular users can actually stay safe. Things like using Bitwarden for password management, understanding your home network, knowing what data you're exposing. Networking fundamentals are also a big one for me.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Are you open to collaboration?</div>
+        <div class="faq-a">Absolutely. Whether it's a game project, a security discussion, or just someone who wants to geek out about the same things — hit me up via the contact page.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What are you currently playing?</div>
+        <div class="faq-a">Something. Always something. Gaming is a core part of who I am — it's what made me want to make games in the first place. Ask me and I'll probably give you a very enthusiastic answer.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section id="links" class="section">
+    <div class="section-title">Links</div>
+    <div class="section-subtitle">// find me elsewhere</div>
+    <div class="links-grid">
+      <a class="link-row" href="https://x.com/ZenSecuu" target="_blank">
+        <span class="link-icon">𝕏</span>
+        <div><div class="link-label">Twitter / X</div><div class="link-sub">@pafuu</div></div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-row" href="https://github.com/Pafuu170" target="_blank">
+        <span class="link-icon">⬡</span>
+        <div><div class="link-label">GitHub</div><div class="link-sub">code & Unity projects</div></div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-row" href="https://pafuu.itch.io/" target="_blank">
+        <span class="link-icon">◈</span>
+        <div><div class="link-label">itch.io</div><div class="link-sub">games & prototypes</div></div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-row" href="#" target="_blank">
+        <span class="link-icon">❖</span>
+        <div><div class="link-label">Discord</div><div class="link-sub">pafuu170</div></div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="section-title">Contact</div>
+    <div class="section-subtitle">// transmit a message</div>
+    <div class="contact-wrap">
+      <p class="contact-intro">Got a project idea, a weird question, or just want to talk games or security? Drop a message — I read everything.</p>
+      <div class="form-field">
+        <label class="form-label">Name</label>
+        <input class="form-input" type="text" placeholder="Your name">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="What's on your mind?"></textarea>
+      </div>
+      <a class="btn btn-filled" href="#">⚙ Send Transmission</a>
+      <p class="form-note">// alternatively: reach out via any of the links page channels</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="projectModal" onclick="closeProjectIfOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div>
+        <div class="modal-num" id="modalNum"></div>
+        <div class="modal-title" id="modalTitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeProject()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-image" id="modalImageWrap">
+        <img id="modalImg" src="" alt="">
+        <div class="modal-image-placeholder" id="modalPlaceholder">
+          <span>⚙</span>
+          add an image here
+        </div>
+      </div>
+      <div class="modal-content-text" id="modalText"></div>
+    </div>
+    <div class="modal-footer">
+      <span class="work-status" id="modalStatus"></span>
+    </div>
+  </div>
+</div>
+
+<div class="scroll-hint" aria-hidden="true">pafuu.dev · 2025</div>
+
+<script>
+  const projects = [
+    {
+      num: '001',
+      title: 'Project: Axis',
+      status: 'wip',
+      statusLabel: 'In Progress',
+      image: '',
+      text: `<p>The first game set in the shared universe. Built in Unity, Project: Axis serves as the entry point into the larger world — a place where players can start to feel the lore without it being spelled out yet.</p><p>Details are still under wraps, but the vision is clear: a game that feels complete on its own, but rewards players who dig deeper into the universe it belongs to.</p>`
+    },
+    {
+      num: '002',
+      title: 'The Book',
+      status: 'wip',
+      statusLabel: 'In Progress',
+      image: '',
+      text: `<p>A novel set in the same universe as all my games. Where the games let you play in this world, the book lets you live in it — deeper lore, proper characters, and stories that wouldn't fit in a game format.</p><p>Still early days, but the idea is that someone could read the book, then boot up one of my games, and feel like they already know this place. Or the other way around.</p>`
+    },
+    {
+      num: '003',
+      title: 'Security Notes',
+      status: 'concept',
+      statusLabel: 'Concept',
+      image: '',
+      text: `<p>A planned collection of practical, no-nonsense security guides for everyday users. Not aimed at hackers — aimed at people who just want to stay safe online without needing a computer science degree.</p><p>Topics will include: setting up Bitwarden properly, understanding your home network, recognising phishing, and other basics that make a huge difference in practice.</p>`
+    },
+    {
+      num: '004',
+      title: 'This Portfolio',
+      status: 'complete',
+      statusLabel: 'Complete',
+      image: '',
+      text: `<p>You're looking at it. A steampunk-themed personal site built with plain HTML, CSS, and a sprinkle of vanilla JS. No frameworks, no build tools — just gears, brass, and a lot of CSS variables.</p><p>Designed to be simple to maintain and easy to extend. Each work card opens into its own detail view — like this one.</p>`
+    }
+  ];
+
+  function openProject(i) {
+    const p = projects[i];
+    document.getElementById('modalNum').textContent = p.num;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalText').innerHTML = p.text;
+    const statusEl = document.getElementById('modalStatus');
+    statusEl.textContent = p.statusLabel;
+    statusEl.className = 'work-status ' + p.status;
+    const img = document.getElementById('modalImg');
+    const placeholder = document.getElementById('modalPlaceholder');
+    if (p.image) {
+      img.src = p.image;
+      img.classList.add('loaded');
+      placeholder.style.display = 'none';
+    } else {
+      img.classList.remove('loaded');
+      img.src = '';
+      placeholder.style.display = 'flex';
+    }
+    document.getElementById('projectModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProject() {
+    document.getElementById('projectModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeProjectIfOutside(e) {
+    if (e.target === document.getElementById('projectModal')) closeProject();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
+
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const link = document.querySelector(`.nav-links a[data-section="${id}"]`);
+    if (link) link.classList.add('active');
+    window.scrollTo(0, 0);
+    return false;
+  }
+
+  function toggleFaq(el) {
+    el.parentElement.classList.toggle('open');
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeIcon').textContent = isDark ? '☾' : '☀';
+    document.getElementById('themeLabel').textContent = isDark ? 'Dark' : 'Light';
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', e => e.preventDefault());
+  });
+</script>
+</body>
+</html>
