@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pafuu.dev</title>
+<title>pafuu.dev — cogsmith & game architect</title>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -714,8 +714,8 @@
   <!-- HOME -->
   <section id="home" class="section active">
     <div class="home-bg-gear" aria-hidden="true">⚙</div>
-    <div class="home-tag">portfolio · 2026</div>
-    <h1>hi, i'm<br><span>pafuu</span></h1>
+    <div class="home-tag">portfolio · 2025</div>
+    <h1>hi, i'm<br><span>pafuu.</span></h1>
     <p class="home-sub">Game dev building one universe for all my games to live in. Unity crafter, cybersecurity curious, networking nerd & full-time gaming enthusiast.</p>
     <div class="btn-group">
       <a class="btn btn-filled" href="#" onclick="showSection('work')">⚙ View Work</a>
@@ -824,24 +824,24 @@
     <div class="section-title">Links</div>
     <div class="section-subtitle">// find me elsewhere</div>
     <div class="links-grid">
-      <a class="link-row" href="https://x.com/ZenSecuu" target="_blank">
+      <a class="link-row" href="#" target="_blank">
         <span class="link-icon">𝕏</span>
         <div><div class="link-label">Twitter / X</div><div class="link-sub">@pafuu</div></div>
         <span class="link-arrow">→</span>
       </a>
-      <a class="link-row" href="https://github.com/Pafuu170" target="_blank">
+      <a class="link-row" href="#" target="_blank">
         <span class="link-icon">⬡</span>
         <div><div class="link-label">GitHub</div><div class="link-sub">code & Unity projects</div></div>
         <span class="link-arrow">→</span>
       </a>
-      <a class="link-row" href="https://pafuu.itch.io/" target="_blank">
+      <a class="link-row" href="#" target="_blank">
         <span class="link-icon">◈</span>
         <div><div class="link-label">itch.io</div><div class="link-sub">games & prototypes</div></div>
         <span class="link-arrow">→</span>
       </a>
       <a class="link-row" href="#" target="_blank">
         <span class="link-icon">❖</span>
-        <div><div class="link-label">Discord</div><div class="link-sub">pafuu170</div></div>
+        <div><div class="link-label">Discord</div><div class="link-sub">pafuu</div></div>
         <span class="link-arrow">→</span>
       </a>
     </div>
@@ -851,23 +851,23 @@
   <section id="contact" class="section">
     <div class="section-title">Contact</div>
     <div class="section-subtitle">// transmit a message</div>
-    <div class="contact-wrap">
+    <form class="contact-wrap" action="https://formspree.io/f/mpqewqvw" method="POST" onsubmit="handleSubmit(event)">
       <p class="contact-intro">Got a project idea, a weird question, or just want to talk games or security? Drop a message — I read everything.</p>
       <div class="form-field">
-        <label class="form-label">Name</label>
-        <input class="form-input" type="text" placeholder="Your name">
+        <label class="form-label" for="contact-name">Name</label>
+        <input class="form-input" id="contact-name" type="text" name="name" placeholder="Your name" required>
       </div>
       <div class="form-field">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" placeholder="your@email.com">
+        <label class="form-label" for="contact-email">Email</label>
+        <input class="form-input" id="contact-email" type="email" name="email" placeholder="your@email.com" required>
       </div>
       <div class="form-field">
-        <label class="form-label">Message</label>
-        <textarea class="form-textarea" placeholder="What's on your mind?"></textarea>
+        <label class="form-label" for="contact-msg">Message</label>
+        <textarea class="form-textarea" id="contact-msg" name="message" placeholder="What's on your mind?" required></textarea>
       </div>
-      <a class="btn btn-filled" href="#">⚙ Send Transmission</a>
-      <p class="form-note">// alternatively: reach out via any of the links page channels</p>
-    </div>
+      <button type="submit" class="btn btn-filled" id="submitBtn">⚙ Send Transmission</button>
+      <p class="form-note" id="formNote">// alternatively: reach out via any of the links page channels</p>
+    </form>
   </section>
 
 </main>
@@ -969,6 +969,37 @@
   }
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const note = document.getElementById('formNote');
+    btn.textContent = '⚙ Transmitting...';
+    btn.style.opacity = '0.6';
+    btn.disabled = true;
+    try {
+      const res = await fetch(e.target.action, {
+        method: 'POST',
+        body: new FormData(e.target),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        btn.textContent = '✓ Transmission received!';
+        btn.style.opacity = '1';
+        note.textContent = '// message sent — i\'ll get back to you soon';
+        note.style.color = '#8ab56a';
+        e.target.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      btn.textContent = '⚙ Send Transmission';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+      note.textContent = '// something went wrong — try again or reach out via the links page';
+      note.style.color = '#c06050';
+    }
+  }
 
   function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
